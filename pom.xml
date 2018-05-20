@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mgreis.delivery</groupId>
+    <artifactId>toggler-service</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <ff4j.version>1.6.5</ff4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
+        <spring-boot-starter.version>1.5.4.RELEASE</spring-boot-starter.version>
+        <junit.version>4.12.0</junit.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <slf4j.version>1.7.24</slf4j.version>
+
+        <skip-tests>true</skip-tests>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+
+            <!-- Servlet -->
+            <dependency>
+                <groupId>org.ff4j</groupId>
+                <artifactId>ff4j-web</artifactId>
+                <version>${ff4j.version}</version>
+            </dependency>
+
+            <!-- REST API (with springwebmvc) -->
+            <dependency>
+                <groupId>org.ff4j</groupId>
+                <artifactId>ff4j-spring-boot-web-api</artifactId>
+                <version>${ff4j.version}</version>
+            </dependency>
+
+            <!--Swagger-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Tests -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Client HTTP -->
+            <dependency>
+                <groupId>org.ff4j</groupId>
+                <artifactId>ff4j-webapi-jersey2x</artifactId>
+                <scope>test</scope>
+                <version>${ff4j.version}</version>
+            </dependency>
+
+            <!-- logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <modules>
+        <module>delivery</module>
+        <module>docker</module>
+        <module>internal</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
+
