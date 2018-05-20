@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>docker-assemble</artifactId>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>com.mgreis.delivery</groupId>
+        <artifactId>docker</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <useColor>true</useColor>
+                            <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+                            <images>
+                                <image>
+                                    <name>cassandra:3.11.2</name>
+                                    <alias>cassandra</alias>
+                                    <run>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <hostname>cassandra</hostname>
+                                        <ports>
+                                            <port>9042:9042</port>
+                                        </ports>
+                                        <env>
+                                            <CASSANDRA_LISTEN_ADDRESS>localhost
+                                            </CASSANDRA_LISTEN_ADDRESS><!-- this will force C* to use the datacenter settings from cassandra-rackdc.properties -->
+                                            <CASSANDRA_ENDPOINT_SNITCH>GossipingPropertyFileSnitch
+                                            </CASSANDRA_ENDPOINT_SNITCH>
+                                            <CASSANDRA_DC>dc1</CASSANDRA_DC>
+                                        </env>
+                                        <network>
+                                            <mode>custom</mode>
+                                            <name>${project.groupId}</name>
+                                        </network>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
