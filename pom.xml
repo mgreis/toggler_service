@@ -9,15 +9,29 @@
     <packaging>pom</packaging>
 
     <properties>
+        <!-- Docker -->
+        <docker.registryHost>docker.mgreis.com</docker.registryHost>
+        <docker.organizationName>mgreis</docker.organizationName>
+        <docker-maven-plugin.version>0.25.2</docker-maven-plugin.version>
+
+        <!--Maven plugins-->
+        <build-helper-maven-plugin>3.0.0</build-helper-maven-plugin>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+
         <ff4j.version>1.6.5</ff4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
         <spring-boot-starter.version>1.5.4.RELEASE</spring-boot-starter.version>
         <junit.version>4.12.0</junit.version>
-        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
-        <slf4j.version>1.7.24</slf4j.version>
 
-        <skip-tests>true</skip-tests>
+        <slf4j.version>1.7.24</slf4j.version>
+        <jackson.version>2.9.0</jackson.version>
+        <value.version>2.4.6</value.version>
+
+        <spring-boot-maven-plugin.version>1.5.11.RELEASE</spring-boot-maven-plugin.version>
+
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencyManagement>
@@ -84,17 +98,55 @@
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
+            <!-- jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-annotations</artifactId>
+                    </exclusion>
+                </exclusions>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${value.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-    <modules>
-        <module>delivery</module>
-        <module>docker</module>
-        <module>internal</module>
-    </modules>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <testSource>1.8</testSource>
+                        <testTarget>1.8</testTarget>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -103,5 +155,12 @@
             </plugins>
         </pluginManagement>
     </build>
+
+
+    <modules>
+        <module>delivery</module>
+        <module>docker</module>
+        <module>internal</module>
+    </modules>
 </project>
 

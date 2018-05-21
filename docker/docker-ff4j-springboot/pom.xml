@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>docker-ff4j-springboot</artifactId>
+    <parent>
+        <groupId>com.mgreis.delivery</groupId>
+        <artifactId>docker</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ff4j-springboot</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- copy dependencies into the resources dir -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dckr/resources</outputDirectory>
+                            <excludeTransitive>true</excludeTransitive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.16.9</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>ff4j-springboot:${project.version}</name>
+                            <alias>ff4j-springboot-dockerimage</alias>
+                            <build>
+                                <dockerFileDir>${project.build.directory}/dckr/</dockerFileDir>
+                            </build>
+                            <!--run>
+                                <namingStrategy>alias</namingStrategy>
+                                <dependsOn>
+                                    <container>mongo</container>
+                                </dependsOn>
+
+                                <links>
+                                    <link>mongo</link>
+                                </links>
+                                <ports>
+                                    <port>9876:8080</port>
+                                </ports>
+                                <log>
+                                    <prefix>TC</prefix>
+                                    <date>default</date>
+                                    <color>cyan</color>
+                                </log>
+                            </run-->
+                        </image>
+                    </images>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                            <goal>build</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <!-- Uncommment this execution phase if you wan to remove container after testing -->
+<!--<execution>
+<id>clean image</id>
+<phase>post-integration-test</phase>
+<goals>
+<goal>stop</goal>
+</goals>
+</execution> -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
