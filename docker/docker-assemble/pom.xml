@@ -18,11 +18,35 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
+                        <version>${docker-maven-plugin.version}</version>
                         <configuration>
                             <verbose>true</verbose>
                             <useColor>true</useColor>
                             <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
                             <images>
+                                <image>
+                                    <name>${docker.registryHost}/${docker.organizationName}/ff4j-springboot:${project.version}</name>
+                                    <alias>ff4j-springboot</alias>
+                                    <run>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <hostname>ff4j-springboot</hostname>
+                                        <ports>
+                                            <port>8080:8080</port>
+                                        </ports>
+                                        <env>
+                                            <LOGLEVEL>ALL</LOGLEVEL>
+                                        </env>
+                                        <network>
+                                            <mode>custom</mode>
+                                            <name>${project.groupId}</name>
+                                        </network>
+                                        <log>
+                                            <prefix>FF4J-SPRINGBOOT</prefix>
+                                            <date>default</date>
+                                            <color>cyan</color>
+                                        </log>
+                                    </run>
+                                </image>
                                 <image>
                                     <name>cassandra:3.11.2</name>
                                     <alias>cassandra</alias>

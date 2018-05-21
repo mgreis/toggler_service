@@ -16,6 +16,7 @@
 
     <modules>
         <module>ff4j-springboot</module>
+        <module>json-model</module>
     </modules>
 
 </project>
