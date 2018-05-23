@@ -1,3 +1,17 @@
+/*
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ *
+ * Copyright 2013-2016 the original author or authors.
+ */
+
 package com.mgreis.delivery.rsc;
 
 import org.ff4j.FF4j;
@@ -15,19 +29,15 @@ public class HomeResource {
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "text/html")
     public String sayHello() {
         StringBuilder response = new StringBuilder("<html><body><ul>");
-        response.append(
-            "<li> To access the <b>WebConsole</b> please go to <a href=\"./ff4j-web-console/home\">ff4j-web-console</a>");
+        response.append("<li> To access the <b>WebConsole</b> please go to <a href=\"./ff4j-web-console/home\">ff4j-web-console</a>");
         response.append("<li> To access the <b>REST API</b> please go to <a href=\"./api/ff4j\">api/ff4j</a>");
-        response.append(
-            "<li> To access the <b>Swagger File </b> please go to <a href=\"./v2/api-docs\">/v2/api-docs</a>");
-        response.append(
-            "<li> To access the <b>Swagger -ZUI </b> please go to <a href=\"./swagger-ui.html\">/swagger-ui.html</a></ul>");
-
-        response.append(
-            "<p>Is <span style=\"color:red\">Awesome</span> feature activated ? from  ff4j.check(\"AwesomeFeature\") <span style=\"color:blue\">");
+        response.append("<li> To access the <b>Swagger File </b> please go to <a href=\"./v2/api-docs\">/v2/api-docs</a>");
+        response.append("<li> To access the <b>Swagger -ZUI </b> please go to <a href=\"./swagger-ui.html\">/swagger-ui.html</a></ul>");
+        
+        response.append("<p>Is <span style=\"color:red\">Awesome</span> feature activated ? from  ff4j.check(\"AwesomeFeature\") <span style=\"color:blue\">");
         response.append(ff4j.check("AwesomeFeature"));
         response.append("</span></body></html>");
-
         return response.toString();
     }
+
 }
