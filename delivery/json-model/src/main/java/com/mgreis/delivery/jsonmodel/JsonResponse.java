@@ -10,7 +10,7 @@ import org.immutables.value.Value;
 /**
  * The JSON response class object to be marshalled and unmarshalled.
  *
- * @author Mario Pereira (mario.pereira@feedzai.com)
+ * @author Mario Pereira
  * @since 1.0.0-SNAPSHOT
  */
 @JsonSerialize(

@@ -16,8 +16,9 @@
 
         <!--Maven plugins-->
         <build-helper-maven-plugin>3.0.0</build-helper-maven-plugin>
-        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
 
         <ff4j.version>1.6.5</ff4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -130,12 +131,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot-maven-plugin.version}</version>
-                </plugin>
-
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
@@ -146,6 +141,12 @@
                         <testTarget>1.8</testTarget>
                     </configuration>
                 </plugin>
+
+                <!--plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin-->
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
