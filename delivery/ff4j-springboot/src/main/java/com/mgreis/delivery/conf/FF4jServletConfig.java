@@ -45,6 +45,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @ConditionalOnClass({ConsoleServlet.class, FF4jDispatcherServlet.class})
@@ -59,6 +60,7 @@ public class FF4jServletConfig extends SpringBootServletInitializer {
     }
 
     @Bean
+    @Primary
     @ConditionalOnMissingBean
     public FF4jDispatcherServlet getFF4jDispatcherServlet(FF4j ff4j) {
         FF4jDispatcherServlet ff4jConsoleServlet = new FF4jDispatcherServlet();
