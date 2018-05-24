@@ -40,11 +40,9 @@
                                             <mode>custom</mode>
                                             <name>${project.groupId}</name>
                                         </network>
-                                        <log>
-                                            <prefix>FF4J-SPRINGBOOT</prefix>
-                                            <date>default</date>
-                                            <color>cyan</color>
-                                        </log>
+                                        <dependsOn>
+                                            <container>cassandra</container>
+                                        </dependsOn>
                                     </run>
                                 </image>
                                 <image>
@@ -56,17 +54,14 @@
                                         <ports>
                                             <port>9042:9042</port>
                                         </ports>
-                                        <env>
-                                            <CASSANDRA_LISTEN_ADDRESS>localhost
-                                            </CASSANDRA_LISTEN_ADDRESS><!-- this will force C* to use the datacenter settings from cassandra-rackdc.properties -->
-                                            <CASSANDRA_ENDPOINT_SNITCH>GossipingPropertyFileSnitch
-                                            </CASSANDRA_ENDPOINT_SNITCH>
-                                            <CASSANDRA_DC>dc1</CASSANDRA_DC>
-                                        </env>
                                         <network>
                                             <mode>custom</mode>
                                             <name>${project.groupId}</name>
                                         </network>
+                                        <wait>
+                                            <time>60000</time>
+                                            <log>Starting listening for CQL*</log>
+                                        </wait>
                                     </run>
                                 </image>
                             </images>
