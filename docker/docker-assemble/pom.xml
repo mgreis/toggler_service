@@ -25,7 +25,7 @@
                             <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
                             <images>
                                 <image>
-                                    <name>${docker.registryHost}/${docker.organizationName}/ff4j-springboot:${project.version}</name>
+                                    <name>${project.groupId}/${docker.image.prefix}:${project.version}</name>
                                     <alias>ff4j-springboot</alias>
                                     <run>
                                         <namingStrategy>alias</namingStrategy>

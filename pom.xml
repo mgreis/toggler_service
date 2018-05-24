@@ -10,9 +10,9 @@
 
     <properties>
         <!-- Docker -->
-        <docker.registryHost>docker.mgreis.com</docker.registryHost>
-        <docker.organizationName>mgreis</docker.organizationName>
+        <dockerfile-maven-plugin.version>1.3.6</dockerfile-maven-plugin.version>
         <docker-maven-plugin.version>0.25.2</docker-maven-plugin.version>
+        <docker.image.prefix>ff4j-springboot</docker.image.prefix>
 
         <!--Maven plugins-->
         <build-helper-maven-plugin>3.0.0</build-helper-maven-plugin>

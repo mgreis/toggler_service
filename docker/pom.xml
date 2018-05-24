@@ -11,85 +11,8 @@
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- copy dependencies into the resources dir -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>copy-dependencies</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>copy-dependencies</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${project.build.directory}/dckr/resources</outputDirectory>
-                                <excludeTransitive>true</excludeTransitive>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- copy dockerfile & resources -->
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>prepare-dockerfile</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${project.build.directory}/dckr</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>src/main/dckr</directory>
-                                        <filtering>true</filtering>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- build -->
-                <plugin>
-                    <groupId>io.fabric8</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>${docker-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>build</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>remove</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>stop</goal>
-                                <goal>remove</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>push</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>push</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
     <modules>
         <module>docker-assemble</module>
-        <module>docker-ff4j-springboot</module>
     </modules>
 </project>

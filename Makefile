@@ -14,11 +14,9 @@ site:
 		-Pdocs
 
 docker-install:
-	mvn -DskipTests\
-		-Pdocker \
-		-P-code-quality \
-		-P-license-check \
-		clean install
+	mvn -f delivery/ff4j-springboot/pom.xml \
+		clean install dockerfile:build
+
 
 docker-start: docker-stop
 	mvn -Pdocker\
