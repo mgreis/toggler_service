@@ -31,7 +31,7 @@
         <slf4j.version>1.7.24</slf4j.version>
         <jackson.version>2.9.0</jackson.version>
         <value.version>2.4.6</value.version>
-        <cassandra-driver-core.version>3.1.0</cassandra-driver-core.version>
+        <cassandra-driver-core.version>3.5.0</cassandra-driver-core.version>
 
         <skipTests>true</skipTests>
     </properties>

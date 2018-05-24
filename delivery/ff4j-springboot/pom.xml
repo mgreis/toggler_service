@@ -87,7 +87,24 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--Cassandra-->
+        <dependency>
+            <artifactId>ff4j-store-cassandra</artifactId>
+            <groupId>org.ff4j</groupId>
+            <version>${ff4j.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>${cassandra-driver-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
 
     </dependencies>
 

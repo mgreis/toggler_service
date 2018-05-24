@@ -22,9 +22,11 @@ package com.mgreis.delivery.conf;
 
 
 import org.ff4j.FF4j;
+import org.ff4j.cassandra.CassandraConnection;
+import org.ff4j.cassandra.store.EventRepositoryCassandra;
+import org.ff4j.cassandra.store.FeatureStoreCassandra;
+import org.ff4j.cassandra.store.PropertyStoreCassandra;
 import org.ff4j.core.Feature;
-import org.ff4j.property.PropertyInt;
-import org.ff4j.property.PropertyString;
 import org.ff4j.strategy.el.ExpressionFlipStrategy;
 import org.ff4j.utils.Util;
 import org.ff4j.web.ApiConfig;
@@ -35,9 +37,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.UUID;
+
 @Configuration
 @ConditionalOnClass({FF4j.class})
-@ComponentScan(value = {"org.ff4j.spring.boot.web.api", "org.ff4j.services", "org.ff4j.aop", "org.ff4j.spring"})
+@ComponentScan(value = {"org.ff4j.spring.boot.web.api", "org.ff4j.services", "org.ff4j.aop", "org.ff4j.spring", "org.ff4j.cassandra.CassandraConnection"})
 public class FF4jConfiguration {
 
     @Value("${ff4j.webapi.authentication}")
@@ -48,14 +52,20 @@ public class FF4jConfiguration {
 
     @Bean
     public FF4j getFF4j() {
-        FF4j ff4j = new FF4j()
-            .createFeature("f1")
-            .createFeature("AwesomeFeature")
-            .createFeature("f2").createFeature("f3")
-            .createProperty(new PropertyString("SampleProperty", "go!"))
-            .createProperty(new PropertyInt("SamplePropertyIn", 12));
+        // Server Cassandra must be up and running on lcoalhost:9042
+        CassandraConnection conn = new CassandraConnection("cassandra", 9042);
 
-        Feature exp = new Feature("exp");
+        conn.createKeySpace();
+
+
+        FF4j ff4j = new FF4j();
+        ff4j.setFeatureStore(new FeatureStoreCassandra(conn));
+        ff4j.setPropertiesStore(new PropertyStoreCassandra(conn));
+        ff4j.setEventRepository(new EventRepositoryCassandra(conn));
+        ff4j.createSchema();
+        ff4j.audit(false);
+
+        Feature exp = new Feature(UUID.randomUUID().toString());
         exp.setFlippingStrategy(new ExpressionFlipStrategy("exp", "f1 & f2 | !f1 | f2"));
         ff4j.createFeature(exp);
         return ff4j;
