@@ -158,6 +158,11 @@ public class ToggleResource {
         }
     }
 
+    @PutMapping(value = "/api/toggle")
+    public ResponseEntity<?> putToggleVersion() {
+        return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
     private String getFeatureStrategy(final FlippingStrategy flippingStrategy) {
         if (flippingStrategy == null) {
             return null;
