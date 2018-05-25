@@ -1,40 +1,5 @@
-/*
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- *
- * Copyright 2013-2016 the original author or authors.
- */
-
 package com.mgreis.delivery.conf;
 
-/*
- * #%L
- * ff4j-spring-boot-autoconfigure
- * %%
- * Copyright (C) 2013 - 2016 FF4J
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
-import com.mgreis.delivery.conf.FF4jConfiguration;
 import org.ff4j.FF4j;
 import org.ff4j.web.FF4jDispatcherServlet;
 import org.ff4j.web.embedded.ConsoleServlet;
@@ -47,25 +12,41 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+
+/**
+ * Servlet configuration class for {@link FF4j}.
+ *
+ * @author Mario Pereira
+ * @since 1.0.0
+ */
 @Configuration
 @ConditionalOnClass({ConsoleServlet.class, FF4jDispatcherServlet.class})
 @AutoConfigureAfter(FF4jConfiguration.class)
 public class FF4jServletConfig extends SpringBootServletInitializer {
-    
-    // Since 1.6
-    
+
+    /**
+     * Servlet registration class for the ff4j web console.
+     * @param   ff4jDispatcherServlet an instance of {@link FF4jDispatcherServlet}
+     * @return  a new instance of te {@link ServletRegistrationBean} class
+     */
     @Bean
-    public ServletRegistrationBean ff4jDispatcherServletRegistrationBean(FF4jDispatcherServlet ff4jDispatcherServlet) {
+    public ServletRegistrationBean ff4jDispatcherServletRegistrationBean(
+        final FF4jDispatcherServlet ff4jDispatcherServlet) {
         return new ServletRegistrationBean(ff4jDispatcherServlet, "/ff4j-web-console/*");
     }
 
+    /**
+     *  Servlet creation for {@link FF4jDispatcherServlet}.
+     *
+     * @param ff4j  an instance of the {@link FF4j} class.
+     * @return an instance of the {@link FF4jDispatcherServlet}.
+     */
     @Bean
     @Primary
     @ConditionalOnMissingBean
     public FF4jDispatcherServlet getFF4jDispatcherServlet(FF4j ff4j) {
-        FF4jDispatcherServlet ff4jConsoleServlet = new FF4jDispatcherServlet();
-        ff4jConsoleServlet.setFf4j(ff4j);
-        return ff4jConsoleServlet;
+        final FF4jDispatcherServlet ff4jDispatcherServlet = new FF4jDispatcherServlet();
+        ff4jDispatcherServlet.setFf4j(ff4j);
+        return ff4jDispatcherServlet;
     }
-
 }
