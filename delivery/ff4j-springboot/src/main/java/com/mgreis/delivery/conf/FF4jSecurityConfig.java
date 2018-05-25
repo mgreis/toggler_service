@@ -1,25 +1,5 @@
 package com.mgreis.delivery.conf;
 
-/*
- * #%L
- * ff4j-spring-boot-web-api
- * %%
- * Copyright (C) 2013 - 2017 FF4J
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
 import org.ff4j.web.ApiConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -31,19 +11,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Implementing authentication on top of API
+ * Implementing authentication on top of API.
  *
- * @author Cedrick LUNVEN (@clunven)
+ * @author Mario Pereira
+ * @since 1.0.0
  */
 @Configuration
 @EnableWebSecurity
 public class FF4jSecurityConfig extends WebSecurityConfigurerAdapter {
- 
+
+    /**
+     * An {@link Autowired} instance of {@link ApiConfig}.
+     */
     @Autowired
     private ApiConfig apiConfig;
 
     /**
-     * API REST fined grained tests.
+     * Class constructor.
+     * @param apiConfig an instance of {@link ApiConfig}.
      */
     public FF4jSecurityConfig(ApiConfig apiConfig) {
     }
@@ -51,15 +36,15 @@ public class FF4jSecurityConfig extends WebSecurityConfigurerAdapter {
     /** {@inheritDoc} */
     @SuppressWarnings("rawtypes")
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
+    protected void configure(final AuthenticationManagerBuilder auth)
       throws Exception {
         // Load APIConfig Users intoSpring security in Memory ...
         UserDetailsManagerConfigurer config =  auth.inMemoryAuthentication();
         if (apiConfig.isAuthenticate()) {
-            int count = apiConfig.getUsers().keySet().size();
+            final int count = apiConfig.getUsers().keySet().size();
             int idx = 0;
-            for (String currentUser :  apiConfig.getUsers().keySet()) {
-                UserDetailsBuilder udb = config.withUser(currentUser)
+            for (final String currentUser :  apiConfig.getUsers().keySet()) {
+                final UserDetailsBuilder udb = config.withUser(currentUser)
                     .password(apiConfig.getUsers().get(currentUser))
                     .roles(apiConfig.getPermissions().get(currentUser).toArray(new String[0]));
                 // There is another user to use
@@ -72,7 +57,7 @@ public class FF4jSecurityConfig extends WebSecurityConfigurerAdapter {
  
     /** {@inheritDoc} */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         if (apiConfig.isAuthenticate()) {
             // ENFORCE AUTHENTICATION
             http.httpBasic().
@@ -88,9 +73,4 @@ public class FF4jSecurityConfig extends WebSecurityConfigurerAdapter {
             http.httpBasic().and().csrf().disable();
         }
     }
-
-
-
-
-
 }

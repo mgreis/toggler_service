@@ -1,39 +1,31 @@
-/*
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- *
- * Copyright 2013-2016 the original author or authors.
- */
-
 package com.mgreis.delivery.rsc;
 
-import org.ff4j.FF4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+ * Home resource ReST controller class.
+ *
+ * @author Mario Pereira
+ * @since 1.0.0
+ */
 @RestController
 public class HomeResource {
 
-    @Autowired
-    private FF4j ff4j;
-
+    /**
+     * The home ReST controller class method.
+     *
+     * @return a {@link String} containing the web page.
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "text/html")
-    public String sayHello() {
-        StringBuilder response = new StringBuilder("<html><body><ul>");
-        response.append("<li> To access the <b>WebConsole</b> please go to <a href=\"./ff4j-web-console/home\">ff4j-web-console</a>");
-        response.append("<li> To access the <b>REST API</b> please go to <a href=\"./api/ff4j\">api/ff4j</a>");
-        response.append("<li> To access the <b>Swagger File </b> please go to <a href=\"./v2/api-docs\">/v2/api-docs</a>");
-        response.append("<li> To access the <b>Swagger -ZUI </b> please go to <a href=\"./swagger-ui.html\">/swagger-ui.html</a></ul>");
-        return response.toString();
+    public String homeRSC() {
+        final String response = "<html><body><ul>" +
+            "<li> To access the <b>WebConsole</b> please go to <a href=\"./ff4j-web-console/home\">ff4j-web-console</a>" +
+            "<li> To access the <b>REST API</b> please go to <a href=\"./api/ff4j\">api/ff4j</a>" +
+            "<li> To access the <b>Swagger File </b> please go to <a href=\"./v2/api-docs\">/v2/api-docs</a>" +
+            "<li> To access the <b>Swagger -ZUI </b> please go to <a href=\"./swagger-ui.html\">/swagger-ui.html</a></ul>";
+        return response;
     }
-
 }
