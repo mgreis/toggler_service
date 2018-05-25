@@ -14,10 +14,8 @@
     </parent>
 
     <properties>
-
         <docker.image.prefix>ff4j-springboot</docker.image.prefix>
         <docker.buildArg.JAR_FILE>target/${project.build.finalName}.jar</docker.buildArg.JAR_FILE>
-
     </properties>
 
     <dependencies>
@@ -103,9 +101,8 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>${guava.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -158,9 +155,6 @@
                     </buildArgs>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
-
 </project>
