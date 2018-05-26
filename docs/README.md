@@ -29,5 +29,4 @@ The file already features a Makefile that allows the docker containers meant to 
 |Start the docker environment   | $make docker-start   |
 |Stop the docker environment    | $make docker-stop    |
 |Restart the docker environment | $make docker-restart |
-|Run smoke tests                | $make install-tests  |
 
