@@ -7,10 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mgreis.delivery.annotations.Nullable;
 import org.immutables.value.Value;
-import org.immutables.value.internal.$processor$.meta.$JacksonMirrors;
 
 /**
- * The JSON response class object to be marshalled and unmarshalled.
+ * The JSON request class to create a new toggle.
  *
  * @author Mario Pereira
  * @since 1.0.0
@@ -26,25 +25,42 @@ import org.immutables.value.internal.$processor$.meta.$JacksonMirrors;
 @JsonTypeName("json_request")
 @Value.Immutable
 public abstract class ToggleServiceRequest {
-
+    /**
+     * Get the toggle name.
+     * @return a {@link String} containing the toggle name.
+     */
     @JsonProperty("toggle")
-    public abstract String getToggle ();
+    public abstract String getToggle();
 
+    /**
+     * Get the version.
+     * @return a {@link String} containing the version.
+     */
     @JsonProperty("version")
-    public abstract String getVersion ();
+    public abstract String getVersion();
 
+    /**
+     * Whether or not the toggle is active.
+     * @return a {@link Boolean} classs instance that expresses whether or not the toggle is active.
+     */
     @Nullable
     @JsonProperty("active")
-    public abstract Boolean getActive ();
+    public abstract Boolean getActive();
 
+    /**
+     * Get the description.
+     * @return a {@link String} containing the toggle's description.
+     */
     @Nullable
     @JsonProperty("description")
-    public abstract String getDescription ();
+    public abstract String getDescription();
 
-    @Nullable
-    @JsonProperty("group")
-    public abstract String getFeature();
-
+    /**
+     * A {@link String} class instance containing a list of services separated by commas.
+     * This feature is not active  in these services, regardless of the toggle active status.
+     *
+     * @return  A {@link String} class instance containing the blacklist's service
+     */
     @Nullable
     @JsonProperty("blacklist")
     public abstract String getBlacklist();
