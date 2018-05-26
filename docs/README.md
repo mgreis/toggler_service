@@ -1,4 +1,7 @@
 # Toggler POC
+## [Summary](./SUMMARY.md)
+Gitbook summary.
+
 ## Getting Started
 This project is meant to be a proof of concept for a toggler service.
 
