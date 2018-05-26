@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -71,6 +74,10 @@ public class ToggleResource {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
+
+
 
     /**
      * Insert a new toggle into the system.
@@ -176,7 +183,7 @@ public class ToggleResource {
      */
     @DeleteMapping(value = "/api/toggle/{toggle}/version/{version}")
     public ResponseEntity<?> deleteToggleVersion(@PathVariable String toggle, @PathVariable final String version) {
-        if(ff4j.exist(toggle+':'+version)) {
+        if (ff4j.exist(toggle + ':' + version)) {
             ff4j.delete(toggle + ":" + version);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
@@ -185,7 +192,7 @@ public class ToggleResource {
     }
 
     /**
-     * TODO.
+     * Service unavailable.
      *
      * @return A {@link ResponseEntity} with the service unavailable HTTP code.
      */
@@ -255,6 +262,48 @@ public class ToggleResource {
     public ResponseEntity<?> deleteToggleVersionservice() {
         return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
     }
+
+    /**
+     * Get All toggles which have a service black listed.
+     *
+     * @param service The service's name
+     * @return a {@link ToggleServiceResponse} class instance containing all the toggles.
+     */
+    @GetMapping(value = "/api/service/{service}", produces = "application/json")
+    public ResponseEntity<ToggleServiceResponse> getTogglesService(@PathVariable final String service) {
+
+        final Map<String, Feature> features = ff4j.getFeatures();
+
+        final ArrayList<FeatureRepresentation> featuresList = new ArrayList<>();
+
+        features.forEach((s, feature) -> {
+            final List<String> grantedClients = Arrays.asList(feature
+                                                            .getFlippingStrategy()
+                                                            .getInitParams()
+                                                            .get("grantedClients")
+                                                            .split("\\s*,\\s*"));
+            grantedClients.forEach(client -> {
+                if (service.equals(client)) {
+                    featuresList.add(ImmutableFeatureRepresentation.builder()
+                                         .identifier(feature.getUid())
+                                         .group(feature.getGroup())
+                                         .strategy(getFeatureStrategy(feature.getFlippingStrategy()))
+                                         .active(feature.isEnable())
+                                         .build());
+                }
+            });
+        });
+
+        final ToggleServiceResponse response = ImmutableToggleServiceResponse.builder()
+            .uuid(UUID.randomUUID().toString())
+            .featureRepresentation(featuresList.toArray(new FeatureRepresentation[featuresList.size()]))
+            .service("")
+            .timestamp(Instant.now().getEpochSecond())
+            .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     /**
      * Method that converts a {@link FlippingStrategy} class instance to a {@link String}.

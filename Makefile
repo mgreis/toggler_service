@@ -8,11 +8,6 @@ install:
 install-tests:
 	mvn clean install -DskipTests=false
 
-site:
-	mvn clean install \
-		-pl :site com.mgreis.delivery:gitbook-maven-plugin:serve \
-		-Pdocs
-
 docker-install:
 	mvn -f delivery/ff4j-springboot/pom.xml \
 		clean install dockerfile:build

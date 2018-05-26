@@ -260,7 +260,7 @@ public class ToggleResourceTest {
             null,
             flippingStrategy
         );
-        FeatureStore store = new InMemoryFeatureStore();
+        final FeatureStore store = new InMemoryFeatureStore();
         store.create(feature);
 
         final FlippingExecutionContext flippingExecutionContext = new FlippingExecutionContext();
@@ -275,6 +275,39 @@ public class ToggleResourceTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.identifier", is(feature.getUid())))
             .andExpect(jsonPath("$.active", is(true)));
+    }
+
+    /**
+     * Given two instance of the {@link Feature} class, one that has the service black listed and other that has not,
+     * when we call the getTogglesService() method, a JSON string,
+     * featuring only the black listed feature is returned.
+     *
+     * @throws Exception If something goes wrong an exception is thrown
+     */
+    @Test
+    public void givenTwoFeature_whenGetTogglesService_thenReturnJson()
+        throws Exception {
+            final FlippingStrategy flippingStrategy1 = new BlackListStrategy("service");
+            final Feature feature1 = new Feature("12342:1.32",true);
+            feature1.setFlippingStrategy(flippingStrategy1);
+
+        final FlippingStrategy flippingStrategy2 = new BlackListStrategy("otherService");
+        final Feature feature2 = new Feature("12344:1.33",true);
+        feature2.setFlippingStrategy(flippingStrategy2);
+
+
+
+            final Map<String, Feature> allFeatures = ImmutableMap.of("12342:1.32", feature1,
+                                                                     "12344:1.33",feature2);
+
+
+        given(ff4j.getFeatures()).willReturn(allFeatures);
+
+        mvc.perform(get("/api/service/service")
+                        .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.feature", hasSize(1)))
+            .andExpect(jsonPath("$.feature[0].identifier", is(feature1.getUid())));
     }
 
 
