@@ -10,7 +10,7 @@ import org.immutables.value.Value;
 import org.immutables.value.internal.$processor$.meta.$JacksonMirrors;
 
 /**
- * The JSON response class object to be marshalled and unmarshalled.
+ *  class that represents the JSON response to a request to list toggles.
  *
  * @author Mario Pereira
  * @since 1.0.0
@@ -25,18 +25,12 @@ import org.immutables.value.internal.$processor$.meta.$JacksonMirrors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeName("json_response")
 @Value.Immutable
-public abstract class ToggleServiceResponse {
-
-    @Nullable
-    @JsonProperty("service")
-    public abstract String getService ();
-
-    @JsonProperty("timestamp")
-    public abstract long getTimestamp ();
-
-    @JsonProperty("uuid")
-    public abstract String getUuid ();
-
+public abstract class ToggleServiceResponse extends AbstractResponse{
+    /**
+     * A method that returns an array of {@link FeatureRepresentation} instances.
+     *
+     * @return an array of {@link FeatureRepresentation} instances
+     */
     @JsonProperty("feature")
-    public abstract FeatureResponse [] getFeature ();
+    public abstract FeatureRepresentation [] getFeatureRepresentation ();
 }
