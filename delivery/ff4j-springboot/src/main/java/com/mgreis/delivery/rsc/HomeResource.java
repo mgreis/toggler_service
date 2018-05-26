@@ -23,9 +23,7 @@ public class HomeResource {
     public String homeRSC() {
         final String response = "<html><body><ul>" +
             "<li> To access the <b>WebConsole</b> please go to <a href=\"./ff4j-web-console/home\">ff4j-web-console</a>" +
-            "<li> To access the <b>REST API</b> please go to <a href=\"./api/ff4j\">api/ff4j</a>" +
-            "<li> To access the <b>Swagger File </b> please go to <a href=\"./v2/api-docs\">/v2/api-docs</a>" +
-            "<li> To access the <b>Swagger -ZUI </b> please go to <a href=\"./swagger-ui.html\">/swagger-ui.html</a></ul>";
+            "<li> To access the <b>REST API</b> please go to <a href=\"./api/toggle\">api/toggle</a>";
         return response;
     }
 }

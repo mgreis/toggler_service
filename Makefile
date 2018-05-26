@@ -5,9 +5,6 @@ VERSION=$(shell mvn -q -Dexec.executable='echo' -Dexec.args='$${project.version}
 install:
 	mvn clean install
 
-install-tests:
-	mvn clean install -DskipTests=false
-
 docker-install:
 	mvn -f delivery/ff4j-springboot/pom.xml \
 		clean install dockerfile:build
