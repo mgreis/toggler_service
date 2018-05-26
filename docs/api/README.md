@@ -222,8 +222,7 @@ None
         {
             "identifier":"12342:1.32",
             "group":"12342",
-            "strategy":"org.ff4j.strategy.BlackListStrategy,
-            grantedClients=service_1",
+            "strategy":"org.ff4j.strategy.BlackListStrategy,grantedClients=service_1",
             "active":true
         }
     ],
