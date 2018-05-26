@@ -30,3 +30,5 @@ The file already features a Makefile that allows the docker containers meant to 
 |Stop the docker environment    | $make docker-stop    |
 |Restart the docker environment | $make docker-restart |
 
+### Check Console
+Ater starting the docker environment check the console at: http://localhost:8080/
